@@ -1,4 +1,4 @@
-# Assignment 4: MeshEdit (Ref: https://cs184.org/article/9)
+# Assignment 4: MeshEdit
 
 
 
@@ -133,6 +133,10 @@
 <tr>
   <td>Toggle information overlay</td>
   <td align="center"><kbd>I</kdb></td>
+</tr>
+<tr>
+  <td>Toggle center points</td>
+  <td align="center"><kbd>P</kdb></td>
 </tr>
 <tr>
   <td>Select the next halfedge</td>
