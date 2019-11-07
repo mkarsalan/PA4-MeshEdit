@@ -34,7 +34,7 @@
 
 <h3>Deadline</h3>
 
-<p>The deadline for the entire assignment is Tuesday, November 20th at 11:55pm. However, you can avail a 10% bonus if you submit Section 1 by Wednesday, November 14th.</p>
+<p>The deadline for the entire assignment is Monday, November 18th at 11:55pm. </p>
 
 <h3>Before you get started...</h3>
 
@@ -53,32 +53,30 @@
 
 <h2>Project structure</h2>
 
-<p>The project has 8 parts, divided into 4 sections, worth a total of 100 possible points. Some require only a few lines of code, while others are more substantial.</p>
+<p>The project has 8 parts, divided into 2 sections, worth a total of 100 possible points. Some require only a few lines of code, while others are more substantial.</p>
 
 <p><strong>Section I: Bezier Curves and Surfaces</strong></p>
 
 <ul>
-<li>Part 1: Bezier curves with 1D de Casteljau subdivision (10 pts)</li>
+<li>Part 1: Bezier curves with 1D de Casteljau subdivision </li>
 <li>Part 2: Bezier surfaces with separable 1D de Casteljau subdivision (15 pts)</li>
 </ul>
 
 <p><strong>Section II: Loop Subdivision of General Triangle Meshes</strong></p>
 
 <ul>
-<li>Part 3: Average normals for half-edge meshes (10 pts)</li>
-<li>Part 4: Half-edge flip (15 pts)</li>
-<li>Part 5: Half-edge split (15 pts)</li>
-<li>Part 6: Loop subdivision for mesh upsampling (25 pts)</li>
+<li>Part 3: Average normals for half-edge meshes </li>
+<li>Part 4: Loop subdivision for mesh upsampling </li>
 </ul>
 
-<p><strong>Section III: Shaders</strong></p>
+<p><strong>Section III: Shaders (Bonus!!) </strong></p>
 
 <ul>
-<li>Part 7: Fun with shaders (10 pts)</li>
+<li>Part 5: Fun with shaders </li>
 </ul>
 
 <ul>
-<li>Part 8: Design your own mesh!</li>
+<li>Part 6: Design your own mesh!</li>
 </ul>
 
 <h2>Using the GUI</h2>
@@ -203,7 +201,7 @@
 
 <p><img src="/uploads/article_images/9_20.jpg" alt="" /></p>
 
-<h3>Part 1: Bezier curves with 1D de Casteljau subdivision (10 pts)</h3>
+<h3>Part 1: Bezier curves with 1D de Casteljau subdivision </h3>
 
 <p><a href="https://cs184.org/lecture/curves-surfaces"><strong>Relevant lectures: 9</strong></a></p>
 
@@ -298,7 +296,7 @@ Return p(u, v)
 
 <p><strong>Note:</strong> Before diving into Section II, be sure to first read <a href="https://cs184.org/article/10">this article</a> to help you navigate the <code>HalfedgeMesh</code> class, which you will use extensively in the next section of the project.</p>
 
-<h3>Part 3: Average normals for half-edge meshes (10 pts)</h3>
+<h3>Part 3: Average normals for half-edge meshes </h3>
 
 <p><a href="https://cs184.org/lecture/pipeline"><strong>Relevant lecture: 7</strong></a></p>
 
@@ -344,60 +342,7 @@ h = h-&gt;twin(); // Bump over to the halfedge pointing _toward_ the vertex.
 
 <p><img src="/uploads/article_images/9_19.jpg" alt="" /></p>
 
-<h3>Part 4: Half-edge flip (15 pts)</h3>
-
-<p><strong>Relevant lectures: <a href="https://cs184.org/lecture/mesh-representations">10</a>, <a href="https://cs184.org/lecture/geometry-processing">11</a></strong></p>
-
-<p>Now you should be a little more comfortable traversing the half-edge pointers. In this task, you will implement a more substantial method: a local remeshing operation that "flips" an edge, implemented inside the method <code>HalfedgeMesh::flipEdge</code> in file <em>student_code.cpp</em>.</p>
-
-<p>More precisely, suppose we have a pair of triangles (a,b,c) and (c,b,d). After flipping the edge (b,c), we should now have triangles (a,d,c) and (a,b,d):</p>
-
-<p><img src="/uploads/article_images/9_9.jpg" alt="" /></p>
-
-<p>Your solution should:</p>
-
-<ul>
-<li>Never flip boundary edges (just return immediately if either neighboring face is a boundary loop). Every object has a useful <code>boundary()</code> function that can tell you if it is or is not on the boundary.</li>
-<li>Perform only a constant amount of work -- the cost of flipping a single edge should <strong>not</strong> be proportional to the size of the mesh!</li>
-<li>Not add or delete any elements.  Since there are the same number of mesh elements before and after the flip, you should only need to reassign pointers.</li>
-</ul>
-
-<p>The biggest challenge in properly implementing this operation (as well as split) is making sure that all the pointers still point to the right place in the modified mesh. An easy recipe for ensuring that all pointers are still valid after any general remeshing operation is:</p>
-
-<ol>
-<li>Draw a picture and/or write down a list of all the elements (vertices, edges, faces, halfedges) that will be needed from the original mesh.</li>
-<li>Draw a picture and/or write down a list of all the elements that should appear in the modified mesh.</li>
-<li>Allocate any new elements that are needed in the modified mesh, but do not appear in the original mesh (only relevant for the next part).</li>
-<li>For every element in the "modified" picture, set <strong>all</strong> of its pointers -- even if they didn't change. For instance, for each halfedge, make sure to set <code>next</code>, <code>twin</code>, <code>vertex</code>, <code>edge</code>, and <code>face</code> to the correct values in the new (modified) picture. For each vertex, edge, and face, make sure to set its <code>halfedge</code> pointer. A convenience method <code>Halfedge::setNeighbors()</code> has been created for the purpose of setting all pointers inside a halfedge at once.</li>
-</ol>
-
-<p>The reason for setting all the pointers (and not just the ones that changed) is that it is very easy to miss a pointer, causing your code to fail. Once the code is <strong>working</strong>, you can remove these unnecessary assignments if you wish.</p>
-
-<p><em>Tip:</em> You can check which other objects in the mesh point to a given object by using the debug functions <code>check_for</code> inside <code>HalfEdgeMesh</code>. There's more information about these functions at the bottom of the halfedge documentation article.</p>
-
-<h3>Part 5: Half-edge split (15 pts)</h3>
-
-<p><strong>Relevant lectures: <a href="https://cs184.org/lecture/mesh-representations">10</a>, <a href="https://cs184.org/lecture/geometry-processing">11</a></strong></p>
-
-<p>This time, you will make a different local modification to the mesh in the neighborhood of an edge, called a <strong>split</strong>. In particular, suppose we have a pair of triangles (a,b,c) and (c,b,d). The edge (b,c) is split by inserting a new vertex m at its midpoint and connecting it to the opposite vertices a and d, yielding four triangles:</p>
-
-<p><img src="/uploads/article_images/9_10.jpg" alt="" /></p>
-
-<p>This task is a bit tricker than "flip" because there are more pointers to keep track of, and you will have to allocate new mesh elements this time (e.g., two new triangles, three edges, some halfedges...).  Your implementation should:</p>
-
-<ul>
-
-<li>Assign the position of the new vertex to the midpoint of the original edge, i.e., the average of its two endpoints (see <code>Vertex::position</code>).</li>
-<li>Perform only a constant amount of work -- the cost of splitting a single edge should <strong>not</strong> be proportional to the size of the mesh!</li>
-<li>Allocate only as many new elements as needed; there should be no "orphaned" elements that are not connected to the rest of the mesh.</li>
-</ul>
-
-<p>To obtain a correct implementation, you might try following the same "recipe" given in the previous task (though clever, clean, and simple alternatives are of course always welcome). To verify that your implementation works correctly, try flipping some edges that you've split, and splitting some edges that you flipped. Further, alternate between flipping and splitting edges at least ten times in nearby and far-apart regions of the mesh and check that your mesh changes appropriately.</p>
-
-<p><em>Tip:</em> You can check which other objects in the mesh point to a given object by using the debug functions <code>check_for</code> inside <code>HalfEdgeMesh</code>. There's more information about these functions at the bottom of the halfedge documentation article.</p>
-
-
-<h3>Part 6: Loop subdivision for mesh upsampling (25 pts)</h3>
+<h3>Part 4: Loop subdivision for mesh upsampling </h3>
 
 <p><a href="https://cs184.org/lecture/geometry-processing"><strong>Relevant lectures: 11</strong></a></p>
 
@@ -479,9 +424,9 @@ h = h-&gt;twin(); // Bump over to the halfedge pointing _toward_ the vertex.
 
 
 
-<h2>Section III: Shaders</h2>
+<h2>Section III: Shaders (BONUS) </h2>
 
-<h3>Part 7: Fun with shaders (10 pts)</h3>
+<h3>Part 5: Fun with shaders </h3>
 
 <p><a href="https://cs184.org/lecture/pipeline"><strong>Relevant lecture: 7</strong></a></p>
 
@@ -500,7 +445,6 @@ GLSL Tutorials: <a href="http://joshbeam.com/articles/getting_started_with_glsl/
 
 <h4>Reference Images</h4>
 
-<h5>Phong Shading (required for Part 7)</h5>
 
 <p><img src="/uploads/article_images/9_4.jpg" alt="" /></p>
 
