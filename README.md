@@ -53,7 +53,7 @@
 
 <h2>Project structure</h2>
 
-<p>The project has 8 parts, divided into 2 sections, worth a total of 100 possible points. Some require only a few lines of code, while others are more substantial.</p>
+<p>The project has 5 parts, divided into 3 sections, worth a total of 100 possible points. Some require only a few lines of code, while others are more substantial.</p>
 
 <p><strong>Section I: Bezier Curves and Surfaces</strong></p>
 
@@ -75,9 +75,7 @@
 <li>Part 5: Fun with shaders </li>
 </ul>
 
-<ul>
-<li>Part 6: Design your own mesh!</li>
-</ul>
+
 
 <h2>Using the GUI</h2>
 
@@ -255,7 +253,7 @@
 <li><strong>Scroll</strong> to move the evaluated point along the Bezier curve and see how the intermediate control points move along with it; this is essentially varying $t$ between 0.0 and 1.0</li>
 </ul>
 
-<h3>Part 2: Bezier surfaces with separable 1D de Casteljau subdivision (15 pts)</h3>
+<h3>Part 2: Bezier surfaces with separable 1D de Casteljau subdivision </h3>
 
 <p><a href="https://cs184.org/lecture/curves-surfaces"><strong>Relevant lectures: 9</strong></a></p>
 
