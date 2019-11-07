@@ -422,6 +422,10 @@ h = h-&gt;twin(); // Bump over to the halfedge pointing _toward_ the vertex.
 
 
 
+
+
+
+
 <h2>Section III: Shaders (BONUS) </h2>
 
 <h3>Part 5: Fun with shaders </h3>
